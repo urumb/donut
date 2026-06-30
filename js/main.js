@@ -47,15 +47,24 @@ function redirectToSwiggy(delay = 650) {
   }, delay);
 }
 
+function pulseElement(element) {
+  if (window.gsap && !prefersReducedMotion) {
+    gsap.fromTo(element, { scale: 1 }, { scale: 1.045, yoyo: true, repeat: 1, duration: 0.16, ease: "power2.out" });
+  }
+}
+
 function initOrdering() {
   document.querySelectorAll(".order-link").forEach((link) => {
-    link.addEventListener("click", () => showToast("Opening Swiggy..."));
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      pulseElement(link);
+      showToast("Opening Swiggy...");
+      redirectToSwiggy(520);
+    });
   });
   document.querySelectorAll(".add-button").forEach((button) => {
     button.addEventListener("click", () => {
-      if (window.gsap && !prefersReducedMotion) {
-        gsap.fromTo(button, { scale: 1, rotate: 0 }, { scale: 1.22, rotate: 90, yoyo: true, repeat: 1, duration: 0.18, ease: "power2.out" });
-      }
+      pulseElement(button);
       showToast("Opening Swiggy...");
       redirectToSwiggy();
     });
@@ -82,4 +91,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initCursor({ reducedMotion: prefersReducedMotion });
   initAnimations({ reducedMotion: prefersReducedMotion });
 });
+
 
