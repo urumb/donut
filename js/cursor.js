@@ -1,15 +1,20 @@
-﻿const CURSOR_SVG = `
+const CURSOR_SVG = `
   <svg viewBox="0 0 72 72" role="img" aria-hidden="true">
     <defs>
-      <radialGradient id="cursor-dough" cx="34%" cy="28%" r="72%">
-        <stop offset="0%" stop-color="#ffe1ad" />
-        <stop offset="56%" stop-color="#d99755" />
-        <stop offset="100%" stop-color="#9d5f35" />
+      <radialGradient id="cursor-dough" cx="32%" cy="24%" r="76%">
+        <stop offset="0%" stop-color="#ffe7b8" />
+        <stop offset="50%" stop-color="#d99551" />
+        <stop offset="100%" stop-color="#8f512c" />
       </radialGradient>
-      <radialGradient id="cursor-glaze" cx="36%" cy="24%" r="78%">
-        <stop offset="0%" stop-color="#fff0e5" />
-        <stop offset="55%" stop-color="#e8b8a5" />
-        <stop offset="100%" stop-color="#a8654f" />
+      <radialGradient id="cursor-glaze" cx="33%" cy="22%" r="82%">
+        <stop offset="0%" stop-color="#fff2f5" />
+        <stop offset="45%" stop-color="#ff9fbd" />
+        <stop offset="100%" stop-color="#cc557e" />
+      </radialGradient>
+      <radialGradient id="cursor-hole" cx="42%" cy="36%" r="64%">
+        <stop offset="0%" stop-color="#4e2414" />
+        <stop offset="54%" stop-color="#8b4f2b" />
+        <stop offset="100%" stop-color="#f7c77d" />
       </radialGradient>
       <filter id="cursor-shadow" x="-40%" y="-30%" width="180%" height="180%">
         <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#2b1b12" flood-opacity="0.26" />
@@ -18,17 +23,23 @@
         <rect width="72" height="72" fill="white" />
         <circle cx="36" cy="36" r="11" fill="black" />
         <circle class="cursor-bite-click" cx="56" cy="18" r="10" fill="black" />
-        <circle class="cursor-bite-click" cx="63" cy="29" r="7" fill="black" />
+        <circle class="cursor-bite-click" cx="63" cy="29" r="7.5" fill="black" />
+        <circle class="cursor-bite-click" cx="58" cy="33" r="6" fill="black" />
       </mask>
     </defs>
     <g filter="url(#cursor-shadow)">
       <circle cx="36" cy="36" r="28" fill="url(#cursor-dough)" mask="url(#cursor-mask)" />
-      <path d="M15 32c3-12 14-21 28-19 12 1 21 9 23 20-5-3-10-3-13 2-3 5-9 6-14 2-6-5-14-4-18 2-4 5-10 4-6-7Z" fill="url(#cursor-glaze)" mask="url(#cursor-mask)" />
-      <circle cx="36" cy="36" r="10" fill="#fbf6ec" />
-      <g fill="#fff8ea" opacity="0.88">
-        <rect x="22" y="23" width="8" height="2.2" rx="1.1" transform="rotate(-24 22 23)" />
-        <rect x="43" y="22" width="7" height="2.2" rx="1.1" transform="rotate(28 43 22)" />
-        <rect x="21" y="45" width="7" height="2.2" rx="1.1" transform="rotate(22 21 45)" />
+      <path d="M12 33c2-12 13-22 27-22 14 0 25 8 29 21-5-3-11-3-15 2-4 6-11 7-17 2-5-5-13-4-17 2-3 5-9 5-7-5Z" fill="url(#cursor-glaze)" mask="url(#cursor-mask)" />
+      <circle cx="36" cy="36" r="10.5" fill="url(#cursor-hole)" />
+      <circle cx="32" cy="31" r="6.5" fill="#fbf6ec" opacity="0.86" />
+      <ellipse cx="28" cy="22" rx="9" ry="4" fill="#fff8f8" opacity="0.42" transform="rotate(-20 28 22)" />
+      <g opacity="0.95" mask="url(#cursor-mask)">
+        <rect x="20" y="22" width="8" height="2.4" rx="1.2" fill="#fff1a8" transform="rotate(-24 20 22)" />
+        <rect x="43" y="20" width="7" height="2.4" rx="1.2" fill="#6ed4ff" transform="rotate(28 43 20)" />
+        <rect x="21" y="45" width="7" height="2.4" rx="1.2" fill="#75df7c" transform="rotate(22 21 45)" />
+        <rect x="46" y="45" width="8" height="2.4" rx="1.2" fill="#ffef66" transform="rotate(-18 46 45)" />
+        <rect x="31" y="17" width="6" height="2.2" rx="1.1" fill="#cf6cff" transform="rotate(70 31 17)" />
+        <rect x="15" y="34" width="7" height="2.2" rx="1.1" fill="#ff6b77" transform="rotate(11 15 34)" />
       </g>
     </g>
   </svg>`;
@@ -118,11 +129,11 @@ function createCrumbs(x, y) {
   for (let index = 0; index < 9; index += 1) {
     const crumb = document.createElement("span");
     crumb.className = "crumb";
-    crumb.style.left = `${x}px`;
-    crumb.style.top = `${y}px`;
+    crumb.style.left = `${x + 15}px`;
+    crumb.style.top = `${y - 12}px`;
     document.body.appendChild(crumb);
 
-    const angle = (Math.PI * 2 * index) / 9;
+    const angle = -0.9 + (index / 8) * 1.9;
     const distance = 15 + Math.random() * 24;
     if (window.gsap) {
       gsap.to(crumb, {
