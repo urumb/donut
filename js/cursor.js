@@ -57,8 +57,9 @@
 
     <!-- Masks -->
     <!-- The mask now hides ONLY the bite area, instead of arbitrarily clipping the rest of the shape -->
+    <!-- NEW: Make sure the mask's base bounds fully cover the entire donut's drop shadow so we don't clip the shadow either! -->
     <mask id="cursor-mask-bite">
-      <rect x="-10" y="-10" width="100" height="100" fill="white" />
+      <rect x="-30" y="-30" width="140" height="140" fill="white" />
       <circle cx="36" cy="36" r="10.5" fill="black" /> <!-- Center hole -->
       <g class="cursor-bite-click">
         <circle cx="58" cy="20" r="10" fill="black" />
@@ -116,7 +117,7 @@
       <!-- Purple -->
       <rect x="34" y="16" width="7" height="2.5" rx="1.25" fill="#c56bf5" transform="rotate(80 34 16)" />
       <!-- Coral / Pink -->
-      <rect x="15" y="32" width="7" height="2.5" rx="1.25" fill="#ff6377" transform="rotate(10 15 32)" />
+      <rect x="15" y="32" width="7" height="2.5" fill="#ff6377" transform="rotate(10 15 32)" />
       <!-- Teal -->
       <rect x="52" y="32" width="7" height="2.5" rx="1.25" fill="#44cfa9" transform="rotate(65 52 32)" />
       <!-- White -->
@@ -124,18 +125,14 @@
       <rect x="54" y="42" width="6.5" height="2.5" rx="1.25" fill="#ffffff" transform="rotate(45 54 42)" />
       <rect x="20" y="14" width="6.5" height="2.5" rx="1.25" fill="#ffffff" transform="rotate(-50 20 14)" />
     </g>
-
-    <!-- The Bite Cutout Crumb Texture -->
-    <!-- This overlay appears exactly where the mask cuts the whole shape -->
-    <g class="cursor-bite-click">
-      <!-- To make it realistic, the bite edge should have textured crumbs -->
-      <!-- We use a path that hugs the bite cutout edge -->
-      <path d="M 51 18.5 C 55 20, 56 24, 55 27 C 59 27, 61 29, 62 32 C 60 34, 57 34, 55 34 C 53 36, 50 37, 47 36 C 49 32, 48 29, 46 26 C 48 23, 49 20, 51 18.5 Z" fill="url(#cursor-bite-crumb)" opacity="0.9" />
-      <circle cx="53" cy="26" r="1.5" fill="#ffe3a6" opacity="0.8" />
-      <circle cx="58" cy="32" r="1" fill="#7a3f22" opacity="0.5" />
-      <circle cx="50" cy="33" r="1" fill="#ffe5ad" opacity="0.7" />
-      <circle cx="48" cy="27" r="1.2" fill="#7a3f22" opacity="0.4" />
-    </g>
+  </g>
+  <!-- The Bite Cutout Crumb Texture (moved OUTSIDE the mask group so it doesn't get clipped by its own mask edge) -->
+  <g class="cursor-bite-click" filter="url(#cursor-shadow)">
+    <path d="M 51 18.5 C 55 20, 56 24, 55 27 C 59 27, 61 29, 62 32 C 60 34, 57 34, 55 34 C 53 36, 50 37, 47 36 C 49 32, 48 29, 46 26 C 48 23, 49 20, 51 18.5 Z" fill="url(#cursor-bite-crumb)" opacity="0.9" />
+    <circle cx="53" cy="26" r="1.5" fill="#ffe3a6" opacity="0.8" />
+    <circle cx="58" cy="32" r="1" fill="#7a3f22" opacity="0.5" />
+    <circle cx="50" cy="33" r="1" fill="#ffe5ad" opacity="0.7" />
+    <circle cx="48" cy="27" r="1.2" fill="#7a3f22" opacity="0.4" />
   </g>
 </svg>`;
 
